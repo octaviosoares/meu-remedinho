@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Remedinho - Lembrete de Remédios Fácil</title>
+  <!-- Google Fonts para excelente legibilidade -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Meu Remedinho">
+</head>
+<body>
+
+  <!-- Contêiner principal simulando o aplicativo em tela móvel no desktop -->
+  <div class="app-container">
+    
+    <!-- Cabeçalho Principal -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-main-row">
+          <div class="mascot-mini" id="header-mascot">
+            <img src="doutorinho.png" alt="Doutorinho" class="mascot-img-mini">
+          </div>
+          <h1 class="app-title">Meu Remedinho</h1>
+        </div>
+        <div class="header-datetime-row">
+          <span id="current-date" class="header-date">Carregando data...</span>
+          <span id="current-time" class="header-time">00:00</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Área de Conteúdo com as Telas (SPA) -->
+    <main class="app-content">
+
+      <!-- TELA 1: HOJE (LISTA DE REMÉDIOS) -->
+      <section id="screen-today" class="screen active">
+        <div class="section-title-wrapper">
+          <h2>Remédios de Hoje</h2>
+          <span class="status-badge" id="completion-badge">0 / 0 concluídos</span>
+        </div>
+        
+        <!-- Lista de Remédios -->
+        <div id="medicine-list" class="medicine-list">
+          <!-- Inserido dinamicamente via JS -->
+          <div class="empty-state">
+            <!-- Doutorinho (Centralizado) -->
+            <div class="mascot-container-doutorinho float-animation">
+              <img src="doutorinho.png" alt="Doutorinho" class="mascot-img-large">
+            </div>
+            
+            <!-- Botão de Cadastro Direto -->
+            <button type="button" class="btn-primary btn-empty-state-add" onclick="switchTab('screen-add')">
+              <span class="btn-plus-icon">+</span> Cadastrar novo remédio
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TELA 2: ADICIONAR REMÉDIO -->
+      <section id="screen-add" class="screen">
+        <h2>Adicionar Novo Remédio</h2>
+        
+        <form id="add-medicine-form" onsubmit="event.preventDefault();">
+          
+          <!-- Campo 1: Nome do Remédio com Sugestões Rápidas -->
+          <div class="form-group">
+            <label for="med-name">Qual o nome do remédio?</label>
+            <input type="text" id="med-name" placeholder="Ex: Dipirona, Paracetamol" autocomplete="off" required>
+            
+            <div class="suggestions-label">Sugestões rápidas (toque para escolher):</div>
+            <div class="suggestions-container">
+              <button type="button" class="btn-suggestion" onclick="fillMedName('Dipirona')">Dipirona</button>
+              <button type="button" class="btn-suggestion" onclick="fillMedName('Paracetamol')">Paracetamol</button>
+              <button type="button" class="btn-suggestion" onclick="fillMedName('Omeprazol')">Omeprazol</button>
+              <button type="button" class="btn-suggestion" onclick="fillMedName('Aspirina')">Aspirina</button>
+              <button type="button" class="btn-suggestion" onclick="fillMedName('Vitamina C')">Vitamina C</button>
+              <button type="button" class="btn-suggestion" onclick="fillMedName('Losartana')">Losartana</button>
+            </div>
+          </div>
+
+          <!-- Campo 2: Horário com Seletor Gigante (+ / -) -->
+          <div class="form-group">
+            <label>Que horas deve tomar?</label>
+            <div class="time-picker-container">
+              
+              <div class="time-column">
+                <button type="button" class="btn-time-adjust" onclick="adjustTime('hour', 1)">+</button>
+                <div id="picker-hour" class="time-display">08</div>
+                <button type="button" class="btn-time-adjust" onclick="adjustTime('hour', -1)">-</button>
+                <span class="time-label">Hora</span>
+              </div>
+              
+              <span class="time-separator">:</span>
+              
+              <div class="time-column">
+                <button type="button" class="btn-time-adjust" onclick="adjustTime('minute', 5)">+</button>
+                <div id="picker-minute" class="time-display">00</div>
+                <button type="button" class="btn-time-adjust" onclick="adjustTime('minute', -5)">-</button>
+                <span class="time-label">Minuto</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Campo 3: Frequência (Vezes ao dia) com Botões Grandes -->
+          <div class="form-group">
+            <label>Quantas vezes por dia?</label>
+            <div class="frequency-selector">
+              <input type="hidden" id="med-frequency" value="1">
+              <button type="button" class="btn-frequency active" data-value="1" onclick="selectFrequency(1)">1 vez ao dia</button>
+              <button type="button" class="btn-frequency" data-value="2" onclick="selectFrequency(2)">2 vezes ao dia</button>
+              <button type="button" class="btn-frequency" data-value="3" onclick="selectFrequency(3)">3 vezes ao dia</button>
+              <button type="button" class="btn-frequency" data-value="4" onclick="selectFrequency(4)">4 vezes ao dia</button>
+            </div>
+            <p id="frequency-explanation" class="help-text">O alarme tocará apenas no horário selecionado.</p>
+          </div>
+
+          <!-- Campo 4: Duração do Tratamento -->
+          <div class="form-group">
+            <label>Por quanto tempo vai tomar?</label>
+            <div class="duration-selector">
+              <input type="hidden" id="med-duration" value="continuous">
+              <button type="button" class="btn-duration active" data-value="continuous" onclick="selectDuration('continuous')">Uso Contínuo</button>
+              <button type="button" class="btn-duration" data-value="3" onclick="selectDuration(3)">3 dias</button>
+              <button type="button" class="btn-duration" data-value="5" onclick="selectDuration(5)">5 dias</button>
+              <button type="button" class="btn-duration" data-value="7" onclick="selectDuration(7)">7 dias</button>
+              <button type="button" class="btn-duration" data-value="10" onclick="selectDuration(10)">10 dias</button>
+              <button type="button" class="btn-duration" data-value="custom" onclick="selectDuration('custom')">Outro</button>
+            </div>
+            
+            <!-- Campo para duração customizada (invisível até clicar em 'Outro') -->
+            <div id="custom-duration-container" class="custom-duration-input-wrapper hidden">
+              <label for="custom-duration-days" class="sub-label">Quantos dias de tratamento?</label>
+              <div class="custom-duration-input-row">
+                <input type="number" id="custom-duration-days" min="1" max="365" placeholder="Ex: 14">
+                <span class="days-label">dias</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Salvar Lembrete -->
+          <button type="submit" class="btn-primary" id="btn-save-medicine">
+            💾 Salvar Lembrete
+          </button>
+
+        </form>
+      </section>
+
+      <!-- TELA 3: CONFIGURAÇÕES SIMPLES -->
+      <section id="screen-settings" class="screen">
+        <h2>Configurações do Aplicativo</h2>
+
+        <!-- Ajuste do Tamanho da Fonte -->
+        <div class="settings-group">
+          <h3>Tamanho das Letras</h3>
+          <p class="settings-desc">Escolha o tamanho que fica melhor para ler:</p>
+          <div class="font-size-options">
+            <button class="btn-setting" id="font-normal" onclick="changeFontSize('normal')">A (Normal)</button>
+            <button class="btn-setting active" id="font-large" onclick="changeFontSize('large')">A+ (Grande)</button>
+            <button class="btn-setting" id="font-huge" onclick="changeFontSize('huge')">A++ (Muito Grande)</button>
+          </div>
+        </div>
+
+        <!-- Escolha do Som do Alarme -->
+        <div class="settings-group">
+          <h3>Som do Alarme</h3>
+          <p class="settings-desc">Escolha um som alto e fácil de ouvir:</p>
+          <div class="sound-options">
+            <button class="btn-setting active" id="sound-soft" onclick="changeSound('soft')">🛎️ Sino Suave</button>
+            <button class="btn-setting" id="sound-loud" onclick="changeSound('loud')">🚨 Alarme Alto</button>
+            <button class="btn-setting" id="sound-beep" onclick="changeSound('beep')">📟 Bipe Rápido</button>
+          </div>
+          <button type="button" class="btn-secondary" id="btn-test-sound" onclick="toggleTestSound()">
+            🔊 Testar Som
+          </button>
+        </div>
+
+        <!-- Ajuda e Limpeza de Dados -->
+        <div class="settings-group danger-zone">
+          <h3>Zonas de Perigo</h3>
+          <p class="settings-desc">Apagar todos os dados cadastrados no app:</p>
+          <button type="button" class="btn-danger" onclick="clearAllData()">
+            🗑️ Limpar Todos os Remédios
+          </button>
+        </div>
+
+        <div class="app-version">
+          <p>Meu Remedinho v1.0.0</p>
+          <p>Feito para ajudar você com carinho ❤️</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- NAVEGAÇÃO POR ABAS -->
+    <nav class="app-navigation">
+      <button class="nav-item active" onclick="switchTab('screen-today', this)">
+        <span class="nav-icon">📅</span>
+        <span class="nav-text">Hoje</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('screen-add', this)">
+        <span class="nav-icon">➕</span>
+        <span class="nav-text">Adicionar</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('screen-settings', this)">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-text">Opções</span>
+      </button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- ESTRUTURA PARA ANÚNCIOS DO GOOGLE ADMOB      -->
+    <!-- ========================================== -->
+
+    <!-- 1. ANÚNCIO BANNER (RODAPÉ) -->
+    <!-- Esse bloco fica fixo logo acima das abas ou no rodapé do container -->
+    <div class="admob-banner-container">
+      <!-- 
+        Nota para Implementação AdMob Real:
+        Para carregar o AdMob real no Capacitor/Cordova ou Web PWA:
+        - Carregar o script do SDK de anúncios.
+        - Usar um plugin como '@capacitor-community/admob' ou 'cordova-plugin-admob-free'.
+        - O contêiner abaixo reserva o espaço exato (mínimo 50px de altura para Mobile Banner padrão).
+      -->
+      <div id="real-admob-banner-anchor"></div> <!-- Gancho para renderizar o anúncio nativo real -->
+      
+      <!-- Simulador de Anúncio visualizado no protótipo -->
+      <div id="simulated-admob-banner" class="simulated-banner-ad">
+        <span class="ad-tag">ANÚNCIO</span>
+        <span id="ad-content-text">Drogaria Pague Menos: Desconto de até 30% em vitaminas! Ver ofertas.</span>
+        <button class="ad-close-btn-mock" onclick="dismissMockBanner()">×</button>
+      </div>
+    </div>
+
+  </div> <!-- Fim do app-container -->
+
+  <!-- ========================================== -->
+  <!-- MODAL DE ANÚNCIO INTERSTICIAL (TELA CHEIA) -->
+  <!-- ========================================== -->
+  <!-- 
+    Este anúncio aparecerá em tela cheia logo após salvar um remédio.
+    A regra de ouro: nunca exibir durante o alarme.
+  -->
+  <div id="admob-interstitial" class="admob-fullscreen-overlay hidden">
+    <div class="interstitial-box">
+      <div class="interstitial-header">
+        <span class="ad-tag-large">Patrocinado</span>
+        <!-- Botão de Fechar com contagem regressiva para forçar visualização rápida sem irritar -->
+        <button id="interstitial-close-btn" class="btn-interstitial-close" disabled onclick="closeInterstitial()">
+          Aguarde (3s)
+        </button>
+      </div>
+      <div class="interstitial-body">
+        <div class="interstitial-ad-mockup">
+          <div class="mock-ad-brand">Drogaria Preço Popular 🏥</div>
+          <div class="mock-ad-title">Entrega Grátis de Remédios em Casa!</div>
+          <div class="mock-ad-desc">Compre pelo Whatsapp e receba tudo em até 2 horas. Atendimento especial para a melhor idade.</div>
+          <div class="mock-ad-visual">
+            <span class="mock-delivery-icon">🛵💨</span>
+          </div>
+          <button class="btn-mock-ad-action" onclick="openMockAdUrl()">Falar com Farmacêutico no Whatsapp</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL DE DETECÇÃO DO ALARME ATIVO           -->
+  <!-- ========================================== -->
+  <!-- Fica oculto até a hora exata programada -->
+  <div id="alarm-ring-overlay" class="alarm-fullscreen-overlay hidden">
+    <div class="alarm-ring-box">
+      <div class="alarm-ring-mascots-row">
+        <div class="alarm-ring-mascot-container alarm-shake-animation">
+          <img src="doutorinho.png" alt="Doutorinho" class="mascot-img-large">
+        </div>
+        <div class="alarm-ring-pill-container">
+          <!-- Alarm Mascot SVG (Shaking and ringing a bell) -->
+          <svg class="mascot-alarm" viewBox="0 0 100 120" width="110" height="130" xmlns="http://www.w3.org/2000/svg">
+            <g class="mascot-shake">
+              <g transform="rotate(45 50 50)">
+                <!-- Top Half (Yellow) -->
+                <path d="M 32,50 L 32,28 A 18,18 0 0,1 68,28 L 68,50 Z" fill="#facc15" />
+                <!-- Bottom Half (Red) -->
+                <path d="M 32,50 L 32,72 A 18,18 0 0,0 68,72 L 68,50 Z" fill="#ef4444" />
+                <!-- Seam Shadow -->
+                <line x1="32" y1="50" x2="68" y2="50" stroke="#000000" stroke-width="3" opacity="0.15" />
+                <!-- Highlights -->
+                <path d="M 37,47 L 37,28 A 13,13 0 0,1 55,15" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.6" />
+                <path d="M 63,53 L 63,72 A 13,13 0 0,1 45,85" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.6" />
+                
+                <!-- Wide Eyes (alert) -->
+                <circle cx="42" cy="43" r="5" fill="#1e293b" />
+                <circle cx="43" cy="42" r="1.5" fill="#ffffff" />
+                <circle cx="58" cy="43" r="5" fill="#1e293b" />
+                <circle cx="59" cy="42" r="1.5" fill="#ffffff" />
+                <circle cx="36" cy="49" r="3" fill="#f43f5e" opacity="0.6" />
+                <circle cx="64" cy="49" r="3" fill="#f43f5e" opacity="0.6" />
+                <ellipse cx="50" cy="52" rx="4" ry="5" fill="#881337" />
+                
+                <!-- Left arm -->
+                <path d="M 32,58 Q 20,64 24,74" fill="none" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round" />
+                <!-- Right arm holding the bell -->
+                <path d="M 68,58 Q 80,64 76,72" fill="none" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round" />
+                
+                <!-- Golden Bell -->
+                <g class="mascot-bell" transform-origin="76 72">
+                  <path d="M 70,80 L 86,80 L 82,68 C 74,68 74,68 74,68" fill="none" stroke="none" /> <!-- reset boundary -->
+                  <path d="M 70,80 L 86,80 L 82,68 C 80,65 76,65 74,68 Z" fill="#eab308" stroke="#ca8a04" stroke-width="1.5" />
+                  <circle cx="78" cy="83" r="3" fill="#ca8a04" />
+                </g>
+                
+                <!-- Outer Border -->
+                <rect x="32" y="10" width="36" height="80" rx="18" fill="none" stroke="#1e293b" stroke-width="6" stroke-linejoin="round" />
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <h2 class="alarm-ring-title">Hora do Remédio!</h2>
+      <div id="alarm-medicine-name" class="alarm-med-name">Medicamento</div>
+      <div id="alarm-medicine-time" class="alarm-med-time">08:00</div>
+      
+      <p class="alarm-instruction">Por favor, tome o seu remédio agora para não se esquecer.</p>
+
+      <div class="alarm-action-buttons">
+        <button type="button" class="btn-alarm-action btn-alarm-take" onclick="resolveAlarmFromOverlay('take')">
+          <span class="btn-icon">✓</span> Já Tomei
+        </button>
+        <button type="button" class="btn-alarm-action btn-alarm-skip" onclick="resolveAlarmFromOverlay('skip')">
+          <span class="btn-icon">✗</span> Pular
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL DE HISTÓRICO DE TOMADAS (TELA CHEIA) -->
+  <!-- ========================================== -->
+  <div id="history-overlay" class="history-fullscreen-overlay hidden">
+    <div class="history-dialog-box">
+      <div class="history-header">
+        <h2 class="history-title">📊 Histórico de Tomadas</h2>
+        <button class="btn-history-close" onclick="closeHistory()">×</button>
+      </div>
+      <div class="history-med-name-banner">
+        <div id="history-med-name" class="history-med-name">Nome do Remédio</div>
+        <span id="history-med-badge" class="history-badge">Uso Contínuo</span>
+      </div>
+      <div class="history-body-content" id="history-logs-container">
+        <!-- Logs dos dias gerados dinamicamente via JS -->
+      </div>
+      <button type="button" class="btn-primary btn-history-ok" onclick="closeHistory()">
+        Entendido 👍
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

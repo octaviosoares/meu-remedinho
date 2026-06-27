@@ -1,0 +1,1759 @@
+/* ----------------------------------------------------
+   MEU REMEDINHO - SISTEMA DE DESIGN & ESTILOS PREMIUM
+   Desenvolvido com foco em Acessibilidade e Estética Moderna
+   ---------------------------------------------------- */
+
+:root {
+  /* Variável base para controle dinâmico da fonte (Acessibilidade) */
+  --base-font-size: 18px;
+  
+  /* Paleta de Cores Curada (Alta visibilidade e contraste) */
+  --color-bg-app: #f4f6fa;
+  --color-card-bg: #ffffff;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  
+  /* Gradientes Modernos */
+  --grad-primary: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  --grad-success: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --grad-danger: linear-gradient(135deg, #dc2626 0%, #f43f5e 100%);
+  --grad-neutral: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+  
+  /* Cores de Ação Diretas */
+  --color-primary: #4f46e5;
+  --color-success: #10b981;
+  --color-danger: #f43f5e;
+  
+  /* Variáveis de Borda e Efeitos */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: #0f172a; /* Fundo escuro externo ao simulador */
+  color: var(--color-text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  font-size: var(--base-font-size);
+}
+
+/* ====================================================
+   CONTAINER DO CELULAR (Simulador Premium para Desktop)
+   ==================================================== */
+.app-container {
+  background-color: var(--color-bg-app);
+  width: 100%;
+  max-width: 440px;
+  height: 95vh;
+  max-height: 900px;
+  border-radius: 40px;
+  box-shadow: var(--shadow-lg), 0 0 0 12px #1e293b; /* Borda do simulador simulando celular */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Responsivo para celulares de verdade */
+@media (max-width: 480px) {
+  body {
+    background-color: var(--color-bg-app);
+  }
+  .app-container {
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* ====================================================
+   CABEÇALHO (HEADER)
+   ==================================================== */
+.app-header {
+  background: var(--grad-primary);
+  color: white;
+  padding: 24px 20px 20px 20px;
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.header-datetime-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.header-date {
+  font-weight: 500;
+}
+
+.header-time {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ====================================================
+   CONTEÚDO PRINCIPAL (SPA SCREENS)
+   ==================================================== */
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  padding-bottom: 90px; /* Espaço para o banner e abas */
+  scroll-behavior: smooth;
+}
+
+/* Ocultação de telas inativas */
+.screen {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.screen.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title-wrapper h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.status-badge {
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--color-primary);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ====================================================
+   TELA 1: HOJE - CARDS DE MEDICAMENTOS
+   ==================================================== */
+.medicine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.medicine-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(0,0,0,0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.medicine-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.med-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.med-time {
+  background-color: #f1f5f9;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.med-delete-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.4;
+  padding: 4px;
+}
+.med-delete-btn:hover {
+  opacity: 0.9;
+}
+
+.med-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.med-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.med-details {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+/* Botões gigantes de ação - Super separados */
+.med-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.btn-card-action {
+  flex: 1;
+  border: none;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  transition: transform 0.1s, filter 0.2s;
+}
+
+.btn-card-action:active {
+  transform: scale(0.96);
+}
+
+.btn-take {
+  background: var(--grad-success);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+.btn-skip {
+  background: var(--grad-danger);
+  box-shadow: 0 4px 10px rgba(244, 63, 94, 0.3);
+}
+
+/* Estados Concluídos / Pulados */
+.medicine-card.taken {
+  border-left: 8px solid var(--color-success);
+  background-color: #f0fdf4;
+  opacity: 0.85;
+}
+
+.medicine-card.skipped {
+  border-left: 8px solid var(--color-danger);
+  background-color: #fff1f2;
+  opacity: 0.85;
+}
+
+.card-status-label {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.medicine-card.taken .card-status-label {
+  color: var(--color-success);
+}
+
+.medicine-card.skipped .card-status-label {
+  color: var(--color-danger);
+}
+
+.btn-undo {
+  background-color: #e2e8f0;
+  color: var(--color-text-secondary);
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 8px;
+}
+
+.empty-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.empty-subtext {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+/* ====================================================
+   TELA 2: FORMULÁRIO DE CADASTRO SIMPLIFICADO
+   ==================================================== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--color-text-primary);
+}
+
+input[type="text"] {
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-size: 1.1rem;
+  outline: none;
+  background-color: white;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus {
+  border-color: var(--color-primary);
+}
+
+/* Sugestões Rápidas */
+.suggestions-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.suggestions-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-suggestion {
+  background-color: white;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-suggestion:hover, .btn-suggestion:active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* Seletor de Horário Gigante (+ / -) */
+.time-picker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  background-color: white;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.time-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90px;
+}
+
+.btn-time-adjust {
+  background: #f1f5f9;
+  border: none;
+  width: 60px;
+  height: 50px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.1s, transform 0.1s;
+}
+
+.btn-time-adjust:active {
+  background-color: #cbd5e1;
+  transform: scale(0.92);
+}
+
+.time-display {
+  font-size: 2.2rem;
+  font-weight: 700;
+  padding: 8px 0;
+  color: var(--color-text-primary);
+  user-select: none;
+}
+
+.time-separator {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  padding-bottom: 24px;
+}
+
+.time-label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Seletor de Frequência */
+.frequency-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-frequency {
+  background-color: white;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 14px 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-frequency.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+.help-text {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+/* Botão Salvar Principal */
+.btn-primary {
+  width: 100%;
+  background: var(--grad-primary);
+  color: white;
+  border: none;
+  padding: 18px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+  transition: transform 0.1s, box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+/* ====================================================
+   TELA 3: CONFIGURAÇÕES
+   ==================================================== */
+.settings-group {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.settings-group h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.settings-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin-top: -6px;
+  line-height: 1.4;
+}
+
+.font-size-options, .sound-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-setting {
+  background-color: #f8fafc;
+  border: 2px solid #e2e8f0;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-setting.active {
+  background-color: rgba(79, 70, 229, 0.05);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-secondary {
+  background-color: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  color: var(--color-text-primary);
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+}
+
+.danger-zone {
+  border-left: 6px solid var(--color-danger);
+}
+
+.btn-danger {
+  background-color: #fff1f2;
+  border: 2px solid var(--color-danger);
+  color: var(--color-danger);
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-danger:active {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+.app-version {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  padding: 10px 0;
+  line-height: 1.6;
+}
+
+/* ====================================================
+   NAVEGAÇÃO POR ABAS (TAB BAR)
+   ==================================================== */
+.app-navigation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  height: 76px;
+  z-index: 100;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.nav-item {
+  flex: 1;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: color 0.2s;
+}
+
+.nav-icon {
+  font-size: 1.4rem;
+}
+
+.nav-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.nav-item.active {
+  color: var(--color-primary);
+}
+
+/* ====================================================
+   INTEGRAÇÃO & ESTILO DE ANÚNCIOS (ADMOB)
+   ==================================================== */
+
+/* 1. ANÚNCIO BANNER FIXO NO RODAPÉ */
+.admob-banner-container {
+  position: absolute;
+  bottom: 76px; /* Fica logo acima das abas */
+  left: 0;
+  right: 0;
+  height: 52px; /* AdMob Banner padrão tem 50px de altura */
+  background-color: #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  border-top: 1px solid #94a3b8;
+  overflow: hidden;
+}
+
+.simulated-banner-ad {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-text-secondary);
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.simulated-banner-ad:hover {
+  background: #e2e8f0;
+}
+
+.ad-tag {
+  background-color: #475569;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+#ad-content-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 20px;
+}
+
+.ad-close-btn-mock {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Ajustes de Padding quando o banner de anúncios está ativo */
+.app-content {
+  padding-bottom: 142px; /* 76px (abas) + 52px (banner) + 14px margem */
+}
+
+/* 2. ANÚNCIO INTERSTICIAL (TELA CHEIA) */
+.admob-fullscreen-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.85); /* Fundo bem escuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.interstitial-box {
+  background-color: white;
+  width: 100%;
+  max-width: 380px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modalScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalScaleUp {
+  from { transform: scale(0.9) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.interstitial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ad-tag-large {
+  background-color: #e2e8f0;
+  color: #475569;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.btn-interstitial-close {
+  background-color: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.btn-interstitial-close:not(:disabled) {
+  background-color: #f43f5e;
+  border-color: #f43f5e;
+  color: white;
+  cursor: pointer;
+}
+
+.interstitial-body {
+  padding: 24px;
+}
+
+.interstitial-ad-mockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.mock-ad-brand {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.mock-ad-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+}
+
+.mock-ad-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.mock-ad-visual {
+  width: 100px;
+  height: 100px;
+  background-color: #e0e7ff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.mock-delivery-icon {
+  font-size: 3rem;
+  animation: wiggle 2s infinite ease-in-out;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.btn-mock-ad-action {
+  width: 100%;
+  background: var(--grad-success);
+  color: white;
+  border: none;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+}
+
+/* ====================================================
+   SOBREPOSIÇÃO DE DISPARO DE ALARME (TELA CHEIA)
+   ==================================================== */
+.alarm-fullscreen-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Acima de tudo */
+  padding: 24px;
+}
+
+.alarm-ring-box {
+  width: 100%;
+  max-width: 380px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 32px;
+  padding: 32px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: pulseBox 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes pulseBox {
+  from { transform: scale(0.98); box-shadow: 0 0 20px rgba(244, 63, 94, 0.3); }
+  to { transform: scale(1.02); box-shadow: 0 0 40px rgba(244, 63, 94, 0.6); }
+}
+
+.alarm-ring-bell {
+  font-size: 5rem;
+  animation: ringBell 0.6s infinite ease-in-out alternate;
+}
+
+@keyframes ringBell {
+  from { transform: rotate(-15deg); }
+  to { transform: rotate(15deg); }
+}
+
+.alarm-ring-title {
+  color: var(--color-danger);
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.alarm-med-name {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.alarm-med-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background-color: #f1f5f9;
+  padding: 4px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.alarm-instruction {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.alarm-action-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.btn-alarm-action {
+  width: 100%;
+  border: none;
+  padding: 20px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.1s;
+}
+
+.btn-alarm-action:active {
+  transform: scale(0.96);
+}
+
+.btn-alarm-take {
+  background: var(--grad-success);
+}
+
+.btn-alarm-skip {
+  background: var(--grad-danger);
+}
+
+/* ====================================================
+   CLASSES AUXILIARES DE ANIMAÇÕES E COMPILADOS
+   ==================================================== */
+.hidden {
+  display: none !important;
+}
+
+/* Tamanhos de Fonte Alternados (Substituição por classes na casca do container) */
+.font-size-normal {
+  --base-font-size: 16px;
+}
+
+.font-size-large {
+  --base-font-size: 20px;
+}
+
+.font-size-huge {
+  --base-font-size: 24px;
+}
+
+/* ====================================================
+   MASCOTE "DOUTORINHO" E SUAS ANIMAÇÕES
+   ==================================================== */
+
+.header-main-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mascot-mini {
+  background-color: white;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  border: 2px solid var(--color-primary);
+}
+
+.mascot-img-mini {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Empty State / Doutorinho Geral Container */
+.mascot-container-doutorinho {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 12px auto;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background-color: white;
+  border: 4px solid var(--color-primary);
+}
+
+.mascot-img-large {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #e0f2fe;
+}
+
+/* Comemoração / Celebration */
+.celebration-card {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+  border: 2px dashed #38bdf8;
+  border-radius: var(--radius-lg);
+  padding: 24px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+
+.celebration-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 4px;
+}
+
+.celebration-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.mascot-container-doutorinho-happy {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background-color: white;
+  border: 3px solid var(--color-success);
+}
+
+.mascot-img-medium {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #f0fdf4;
+}
+
+/* Alarm Modal Container */
+.alarm-ring-mascot-container {
+  width: 170px;
+  height: 170px;
+  margin: 0 auto 12px auto;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 4px solid var(--color-danger);
+  background-color: white;
+}
+
+/* Layout para os dois mascotes juntos */
+.mascots-empty-row, .alarm-ring-mascots-row, .mascots-celebration-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.mascot-container-pill-sleeping {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px auto;
+}
+
+.alarm-ring-pill-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascot-container-pill-happy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-plus-icon {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #facc15;
+  margin-right: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0.8;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.btn-empty-state-add {
+  margin-top: 20px;
+  max-width: 320px;
+}
+
+/* Animações CSS para o Doutorinho (Container) */
+.float-animation {
+  animation: gentleImgFloat 3s infinite ease-in-out alternate;
+}
+
+@keyframes gentleImgFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+.happy-animation {
+  animation: happyImgJump 0.8s infinite ease-in-out alternate;
+}
+
+@keyframes happyImgJump {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.04); }
+}
+
+.alarm-shake-animation {
+  animation: alarmImgShake 0.4s infinite ease-in-out;
+}
+
+@keyframes alarmImgShake {
+  0% { transform: rotate(-6deg) scale(0.98); }
+  50% { transform: rotate(6deg) scale(1.02); }
+  100% { transform: rotate(-6deg) scale(0.98); }
+}
+
+/* RESTAURADO: Animações e Estilos do Mascote Pílula SVG */
+.mascot-float {
+  animation: gentleFloat 3s infinite ease-in-out alternate;
+}
+
+@keyframes gentleFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.zzz {
+  font-weight: 700;
+  fill: #6366f1;
+  opacity: 0;
+  font-size: 1rem;
+  animation: zzzFade 3s infinite ease-in-out;
+}
+
+.zzz-1 { animation-delay: 0s; }
+.zzz-2 { animation-delay: 1s; }
+.zzz-3 { animation-delay: 2s; }
+
+@keyframes zzzFade {
+  0% { opacity: 0; transform: scale(0.6) translate(0, 0); }
+  50% { opacity: 0.8; }
+  100% { opacity: 0; transform: scale(1.1) translate(10px, -15px); }
+}
+
+.mascot-happy {
+  animation: happyJump 0.8s infinite ease-in-out alternate;
+}
+
+@keyframes happyJump {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-12px) scale(1.02); }
+}
+
+.mascot-happy-left-arm {
+  transform-origin: 32px 58px;
+  animation: happyLeftArm 0.8s infinite ease-in-out alternate;
+}
+ 
+.mascot-happy-right-arm {
+  transform-origin: 68px 58px;
+  animation: happyRightArm 0.8s infinite ease-in-out alternate;
+}
+ 
+@keyframes happyLeftArm {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(30deg); }
+}
+ 
+@keyframes happyRightArm {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-30deg); }
+}
+ 
+.mascot-alarm {
+  animation: alarmVigorShake 0.4s infinite ease-in-out alternate;
+}
+ 
+@keyframes alarmVigorShake {
+  0% { transform: rotate(-6deg) scale(0.98); }
+  100% { transform: rotate(6deg) scale(1.02); }
+}
+ 
+.mascot-bell {
+  transform-origin: 76px 72px;
+  animation: bellRing 0.4s infinite ease-in-out alternate;
+}
+
+@keyframes bellRing {
+  0% { transform: rotate(-35deg); }
+  100% { transform: rotate(15deg); }
+}
+
+/* ====================================================
+   NOVOS ESTILOS: SLOTS DE HORÁRIO & PRÉ-VISUALIZAÇÃO
+   ==================================================== */
+
+.preview-time-badge {
+  background-color: #e0e7ff;
+  color: var(--color-primary);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: inline-block;
+  margin: 2px 4px;
+  border: 1.5px solid #c7d2fe;
+}
+
+.med-time-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.med-time-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border-radius: var(--radius-md);
+  border: 1.5px solid #e2e8f0;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.slot-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.slot-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slot-time {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  background-color: #e2e8f0;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  min-width: 70px;
+  text-align: center;
+}
+
+.slot-status-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.slot-actions-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.slot-actions-row .btn-slot-action {
+  flex: 1;
+  justify-content: center;
+  padding: 12px;
+  font-size: 1.05rem;
+}
+
+.slot-actions-single {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.btn-slot-action {
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: white;
+  transition: transform 0.1s, filter 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-slot-action:active {
+  transform: scale(0.95);
+}
+
+.btn-slot-take {
+  background: var(--grad-success);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+}
+
+.btn-slot-skip {
+  background: var(--grad-danger);
+  box-shadow: 0 2px 6px rgba(244, 63, 94, 0.2);
+}
+
+.btn-slot-undo {
+  background-color: #e2e8f0;
+  color: var(--color-text-secondary);
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-slot-undo:hover {
+  background-color: #cbd5e1;
+}
+
+/* Modificadores de Estado dos Slots */
+.med-time-slot.taken {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+.med-time-slot.taken .slot-time {
+  background-color: #bbf7d0;
+  color: #15803d;
+}
+.med-time-slot.taken .slot-status-text {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.med-time-slot.skipped {
+  background-color: #fff1f2;
+  border-color: #fecdd3;
+}
+.med-time-slot.skipped .slot-time {
+  background-color: #fecdd3;
+  color: #b91c1c;
+}
+.med-time-slot.skipped .slot-status-text {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.med-time-slot.overdue {
+  background-color: #fffbeb;
+  border-color: #fef08a;
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.15);
+}
+.med-time-slot.overdue .slot-time {
+  background-color: #fef08a;
+  color: #a16207;
+}
+.med-time-slot.overdue .slot-status-text {
+  color: #b45309;
+  font-weight: 700;
+}
+
+.med-time-slot.next {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+}
+.med-time-slot.next .slot-time {
+  background-color: #bfdbfe;
+  color: #1d4ed8;
+}
+.med-time-slot.next .slot-status-text {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.med-time-slot.future {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
+.med-time-slot.future .slot-time {
+  background-color: #cbd5e1;
+  color: #475569;
+}
+.med-time-slot.future .slot-status-text {
+  color: #64748b;
+}
+
+.med-info-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ====================================================
+   NOVOS ESTILOS: SELETOR DE DURAÇÃO & HISTÓRICO
+   ==================================================== */
+
+/* Seletor de Duração no Cadastro */
+.duration-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.btn-duration {
+  background-color: white;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.btn-duration.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+.custom-duration-input-wrapper {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: white;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.sub-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.custom-duration-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom-duration-input-row input {
+  width: 100px;
+  padding: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  outline: none;
+  text-align: center;
+}
+
+.days-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Seções de Tratamento Concluído */
+.finished-treatments-section {
+  margin-top: 30px;
+  border-top: 2px dashed #cbd5e1;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.finished-section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.medicine-card.finished {
+  background-color: #f1f5f9;
+  border-left: 8px solid var(--color-text-secondary);
+  opacity: 0.75;
+}
+
+.badge-finished {
+  background-color: #e2e8f0;
+  color: var(--color-text-secondary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+/* Botão de Histórico */
+.btn-view-history {
+  background-color: #f1f5f9;
+  color: var(--color-primary);
+  border: 1.5px solid #cbd5e1;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.btn-view-history:hover {
+  background-color: #e2e8f0;
+}
+
+/* Modal de Histórico */
+.history-fullscreen-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500;
+  padding: 16px;
+}
+
+.history-dialog-box {
+  background-color: var(--color-bg-app);
+  width: 100%;
+  max-width: 400px;
+  max-height: 85%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px;
+  gap: 14px;
+  animation: modalScaleUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.btn-history-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 0.8;
+  color: var(--color-text-secondary);
+}
+
+.history-med-name-banner {
+  background: white;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-med-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.history-badge {
+  background-color: #e0e7ff;
+  color: var(--color-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.history-body-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 4px;
+}
+
+/* Linhas do Dia no Histórico */
+.history-day-card {
+  background-color: white;
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-day-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  border-bottom: 1.5px solid #f1f5f9;
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
+
+.history-slots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-slot-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.history-slot-time {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.history-slot-status {
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.history-status-taken {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.history-status-skipped {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.history-status-missed {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px dashed #cbd5e1;
+}
+
+.history-status-pending {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.history-status-future {
+  background-color: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.btn-history-ok {
+  margin-top: 8px;
+}
+
+.no-history-text {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  padding: 20px 10px;
+}
+
+

@@ -1,0 +1,17 @@
+{
+  "name": "Meu Remedinho",
+  "short_name": "Remedinho",
+  "description": "Lembrete de Remédios Fácil para a Melhor Idade",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f4f6fa",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "doutorinho.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
