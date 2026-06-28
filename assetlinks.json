@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.octaviosoares.meuremedinho",
+      "sha256_cert_fingerprints": [
+        "1A:35:E2:6B:A1:AB:08:BA:B6:F5:3D:F7:B3:08:20:89:D1:BC:B2:ED:1D:E9:3A:9E:DB:AB:C6:82:49:ED:DB:01"
+      ]
+    }
+  }
+]
